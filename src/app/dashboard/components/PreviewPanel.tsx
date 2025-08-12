@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Profile, Link, Collection, themes } from '@/types'
 import { ExternalLink, ChevronDown, ChevronRight, Folder } from 'lucide-react'
-import { createClient } from '@/utils/supabase/client'
+import Image from 'next/image'
 
 interface PreviewPanelProps {
   profile: Profile
@@ -85,9 +85,11 @@ export default function PreviewPanel({ profile, links, collections }: PreviewPan
                 {/* Avatar */}
                 <div className="w-20 h-20 lg:w-24 lg:h-24 mx-auto mb-3 lg:mb-4 rounded-full overflow-hidden bg-gray-200">
                   {profile.avatar_url ? (
-                    <img 
-                      src={profile.avatar_url} 
+                    <Image
+                      src={profile.avatar_url}
                       alt={profile.display_name || profile.username}
+                      width={96}
+                      height={96}
                       className="w-full h-full object-cover"
                     />
                   ) : (

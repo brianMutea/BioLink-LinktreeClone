@@ -14,11 +14,13 @@ export default async function DashboardPage() {
   }
 
   // Get or create profile
-  let { data: profile, error: profileError } = await supabase
+  const { data: profileData, error: profileError } = await supabase
     .from('profiles')
     .select('*')
     .eq('id', user.id)
     .single()
+  
+  let profile = profileData
 
   if (profileError || !profile) {
     // Create profile if it doesn't exist

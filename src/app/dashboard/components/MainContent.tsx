@@ -15,13 +15,11 @@ interface MainContentProps {
 }
 
 export default function MainContent({
-  user,
   profile,
   links,
   collections,
   onLinksChange,
   onCollectionsChange,
-  onProfileChange
 }: MainContentProps) {
   return (
     <div className="flex-1 min-w-0 bg-white lg:bg-gray-50">

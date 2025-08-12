@@ -8,6 +8,7 @@ import AddLinkModal from '../AddLinkModal'
 import EditLinkModal from '../EditLinkModal'
 import AddCollectionModal from '../AddCollectionModal'
 import { createClient } from '@/utils/supabase/client'
+import NextLink from 'next/link'
 import {
   DndContext,
   closestCenter,
@@ -40,7 +41,7 @@ interface LinksTabProps {
 }
 
 // Sortable Link Item Component
-function SortableLinkItem({ link, onEdit, onDelete }: { 
+function SortableLinkItem({ link, onEdit }: {
   link: Link
   onEdit: (link: Link) => void
   onDelete: (linkId: string) => void
@@ -105,7 +106,6 @@ function SortableCollection({
   links,
   isExpanded,
   onToggle,
-  onEdit,
   onDelete,
   onUngroup,
   onLinkEdit,
@@ -353,7 +353,7 @@ export default function LinksTab({ profile, links, collections, onLinksChange, o
     setActiveId(event.active.id as string)
   }
 
-  const handleDragOver = (event: DragOverEvent) => {
+  const handleDragOver = () => {
     // Remove the state updates from dragOver to prevent infinite re-renders
     // We'll handle all updates in dragEnd instead
     return
@@ -383,7 +383,7 @@ export default function LinksTab({ profile, links, collections, onLinksChange, o
         const overCollection = collections.find(collection => collection.id === overId)
         
         let newCollectionId = activeLink.collection_id
-        let newPosition = activeLink.position
+        const newPosition = activeLink.position
 
         if (overCollection) {
           // Dropped on a collection
@@ -475,10 +475,10 @@ export default function LinksTab({ profile, links, collections, onLinksChange, o
   // Group links by collection
   const unGroupedLinks = links.filter(link => !link.collection_id)
     .sort((a, b) => a.position - b.position)
-  const groupedLinks = collections.map(collection => ({
-    collection,
-    links: links.filter(link => link.collection_id === collection.id)
-  }))
+  // const groupedLinks = collections.map(collection => ({
+  //   collection,
+  //   links: links.filter(link => link.collection_id === collection.id)
+  // }))
 
   const allItems = [
     ...collections.map(c => c.id),
@@ -518,14 +518,14 @@ export default function LinksTab({ profile, links, collections, onLinksChange, o
               <div className="min-w-0">
                 <p className="text-xs sm:text-sm text-blue-800">
                   <span className="font-medium">🔥 Your BioLink is live:</span>{' '}
-                  <a 
+                  <NextLink
                     href={`/${profile.username}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="underline hover:no-underline cursor-pointer break-all"
                   >
                     biolink/{profile.username}
-                  </a>
+                  </NextLink>
                 </p>
               </div>
             </div>

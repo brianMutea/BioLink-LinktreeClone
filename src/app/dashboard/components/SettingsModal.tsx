@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { X, Upload, User as UserIcon, Check, Copy, ExternalLink, AlertCircle } from 'lucide-react'
 import { createClient } from '@/utils/supabase/client'
+import Image from 'next/image'
 
 interface SettingsModalProps {
   user: User
@@ -80,8 +81,8 @@ export default function SettingsModal({ user, profile, onClose, onUpdate }: Sett
 
       onUpdate(data)
       setSuccess('Settings updated successfully!')
-    } catch (error: any) {
-      setError(error.message || 'Failed to update settings')
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'Failed to update settings')
     } finally {
       setIsLoading(false)
     }
@@ -217,9 +218,11 @@ export default function SettingsModal({ user, profile, onClose, onUpdate }: Sett
                 <div className="flex items-center space-x-4">
                   <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
                     {profile.avatar_url ? (
-                      <img 
-                        src={profile.avatar_url} 
-                        alt="Profile" 
+                      <Image
+                        src={profile.avatar_url}
+                        alt="Profile"
+                        width={80}
+                        height={80}
                         className="w-full h-full object-cover"
                       />
                     ) : (

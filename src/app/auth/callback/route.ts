@@ -1,8 +1,8 @@
-import { type EmailOtpType } from '@supabase/supabase-js'
+import { type EmailOtpType, type SupabaseClient } from '@supabase/supabase-js'
 import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'
 
-const createUserProfile = async (supabase: any, userId: string, userEmail: string) => {
+const createUserProfile = async (supabase: SupabaseClient, userId: string, userEmail: string) => {
   try {
     // Check if profile already exists
     const { data: existingProfile } = await supabase

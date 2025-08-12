@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { User } from '@supabase/supabase-js'
 import { Profile, Link, Collection } from '@/types'
 import ProfileDropdown from './components/ProfileDropdown'
@@ -22,11 +22,7 @@ export default function DashboardClient({ user, profile, initialLinks }: Dashboa
   const [showSettings, setShowSettings] = useState(false)
 
   // Load collections
-  useEffect(() => {
-    loadCollections()
-  }, [currentProfile.id])
-
-  const loadCollections = async () => {
+  const loadCollections = useCallback(async () => {
     try {
       const supabase = createClient()
       const { data, error } = await supabase
@@ -41,7 +37,11 @@ export default function DashboardClient({ user, profile, initialLinks }: Dashboa
     } catch (error) {
       console.error('Error loading collections:', error)
     }
-  }
+  }, [currentProfile.id])
+
+  useEffect(() => {
+    loadCollections()
+  }, [loadCollections])
 
   return (
     <div className="min-h-screen bg-gray-50">

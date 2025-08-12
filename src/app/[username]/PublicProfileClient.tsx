@@ -1,9 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Profile, Link, Collection, themes } from '@/types'
 import { ExternalLink, ChevronDown, ChevronRight, Folder } from 'lucide-react'
 import { createClient } from '@/utils/supabase/client'
+import NextLink from 'next/link'
+import Image from 'next/image'
 
 interface PublicProfileClientProps {
   profile: Profile
@@ -17,11 +19,7 @@ export default function PublicProfileClient({ profile, links }: PublicProfileCli
   const activeLinks = links.filter(link => link.is_active).sort((a, b) => a.position - b.position)
 
   // Load collections
-  useEffect(() => {
-    loadCollections()
-  }, [profile.id])
-
-  const loadCollections = async () => {
+  const loadCollections = useCallback(async () => {
     try {
       const supabase = createClient()
       const { data, error } = await supabase
@@ -40,7 +38,11 @@ export default function PublicProfileClient({ profile, links }: PublicProfileCli
     } catch (error) {
       console.error('Error loading collections:', error)
     }
-  }
+  }, [profile.id])
+
+  useEffect(() => {
+    loadCollections()
+  }, [loadCollections])
 
   const handleLinkClick = async (link: Link) => {
     // Track click
@@ -88,9 +90,11 @@ export default function PublicProfileClient({ profile, links }: PublicProfileCli
           {/* Avatar */}
           <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-3 sm:mb-4 rounded-full overflow-hidden bg-gray-200">
             {profile.avatar_url ? (
-              <img 
-                src={profile.avatar_url} 
+              <Image
+                src={profile.avatar_url}
                 alt={profile.display_name || profile.username}
+                width={96}
+                height={96}
                 className="w-full h-full object-cover"
               />
             ) : (
@@ -215,13 +219,13 @@ export default function PublicProfileClient({ profile, links }: PublicProfileCli
 
         {/* Footer */}
         <div className="text-center mt-8 sm:mt-12">
-          <a
+          <NextLink
             href="/"
             className="text-xs sm:text-sm opacity-60 hover:opacity-80 transition-opacity cursor-pointer"
             style={{ color: theme.textColor }}
           >
             Create your own biolink
-          </a>
+          </NextLink>
         </div>
       </div>
     </div>

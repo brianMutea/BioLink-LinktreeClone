@@ -3,9 +3,10 @@
 import { useState, useRef, useEffect } from 'react'
 import { User } from '@supabase/supabase-js'
 import { Profile } from '@/types'
-import { ChevronDown, Settings, User as UserIcon, LogOut, ExternalLink } from 'lucide-react'
+import { ChevronDown, Settings, LogOut, ExternalLink } from 'lucide-react'
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 interface ProfileDropdownProps {
   user: User
@@ -13,7 +14,7 @@ interface ProfileDropdownProps {
   onSettingsClick: () => void
 }
 
-export default function ProfileDropdown({ user, profile, onSettingsClick }: ProfileDropdownProps) {
+export default function ProfileDropdown({ profile, onSettingsClick }: ProfileDropdownProps) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
@@ -57,9 +58,11 @@ export default function ProfileDropdown({ user, profile, onSettingsClick }: Prof
         {/* Avatar */}
         <div className="w-10 h-10 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
           {profile.avatar_url ? (
-            <img 
-              src={profile.avatar_url} 
+            <Image
+              src={profile.avatar_url}
               alt={profile.display_name || profile.username}
+              width={40}
+              height={40}
               className="w-full h-full object-cover"
             />
           ) : (

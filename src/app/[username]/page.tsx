@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { notFound } from 'next/navigation'
-import { Profile, Link, themes } from '@/types'
+import { Profile, Link } from '@/types'
 import PublicProfileClient from './PublicProfileClient'
 
 interface PublicProfilePageProps {

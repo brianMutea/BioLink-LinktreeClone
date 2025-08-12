@@ -1,5 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 import SignupForm from './SignupForm'
 
 export default async function SignupPage() {
@@ -42,20 +43,20 @@ export default async function SignupPage() {
             <SignupForm />
             
             <p className="text-center text-xs text-gray-500 leading-relaxed">
-              By clicking <span className="font-semibold">Create account</span>, you agree to BioLink's{' '}
-              <a
+              By clicking <span className="font-semibold">Create account</span>, you agree to BioLink&apos;s{' '}
+              <Link
                 href="/terms"
                 className="text-gray-700 underline hover:text-gray-900 cursor-pointer"
               >
                 privacy notice
-              </a>
+              </Link>
               ,{' '}
-              <a
+              <Link
                 href="/privacy"
                 className="text-gray-700 underline hover:text-gray-900 cursor-pointer"
               >
                 T&Cs
-              </a>
+              </Link>
               {' '}and to receive offers, news and updates.
             </p>
           </div>
