@@ -1,4 +1,5 @@
 'use client'
+export const runtime = 'nodejs'
 
 import { useState, useEffect } from 'react'
 import { Profile, Link, Collection } from '@/types'
@@ -17,7 +18,7 @@ import {
   useSensor,
   useSensors,
   DragEndEvent,
-  DragOverEvent,
+  // DragOverEvent,
   DragStartEvent,
   DragOverlay,
 } from '@dnd-kit/core'
@@ -383,7 +384,7 @@ export default function LinksTab({ profile, links, collections, onLinksChange, o
         const overCollection = collections.find(collection => collection.id === overId)
         
         let newCollectionId = activeLink.collection_id
-        const newPosition = activeLink.position
+        // const newPosition = activeLink.position
 
         if (overCollection) {
           // Dropped on a collection

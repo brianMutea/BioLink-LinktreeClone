@@ -1,3 +1,5 @@
+export const runtime = 'nodejs'
+
 import { createClient } from '@/utils/supabase/server'
 import { notFound } from 'next/navigation'
 import { Profile, Link } from '@/types'
@@ -10,13 +12,14 @@ interface PublicProfilePageProps {
 }
 
 export default async function PublicProfilePage({ params }: PublicProfilePageProps) {
+  const { username } = params
   const supabase = await createClient()
   
   // Get profile by username
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('*')
-    .eq('username', params.username)
+    .eq('username', username)
     .eq('is_public', true)
     .single()
 
@@ -43,12 +46,13 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
 }
 
 export async function generateMetadata({ params }: PublicProfilePageProps) {
+  const { username } = params
   const supabase = await createClient()
   
   const { data: profile } = await supabase
     .from('profiles')
     .select('display_name, bio, username')
-    .eq('username', params.username)
+    .eq('username', username)
     .eq('is_public', true)
     .single()
 

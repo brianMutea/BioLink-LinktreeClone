@@ -1,3 +1,5 @@
+export const runtime = 'nodejs'
+
 import { type EmailOtpType, type SupabaseClient } from '@supabase/supabase-js'
 import { type NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/utils/supabase/server'

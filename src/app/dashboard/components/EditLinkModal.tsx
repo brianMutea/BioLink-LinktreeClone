@@ -1,4 +1,5 @@
 'use client'
+export const runtime = 'nodejs'
 
 import { useState } from 'react'
 import { Link } from '@/types'
