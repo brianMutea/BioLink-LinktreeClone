@@ -6,13 +6,13 @@ import { Profile, Link } from '@/types'
 import PublicProfileClient from './PublicProfileClient'
 
 interface PublicProfilePageProps {
-  params: {
+  params: Promise<{
     username: string
-  }
+  }>
 }
 
 export default async function PublicProfilePage({ params }: PublicProfilePageProps) {
-  const { username } = params
+  const { username } = await params
   const supabase = await createClient()
   
   // Get profile by username
@@ -46,7 +46,7 @@ export default async function PublicProfilePage({ params }: PublicProfilePagePro
 }
 
 export async function generateMetadata({ params }: PublicProfilePageProps) {
-  const { username } = params
+  const { username } = await params
   const supabase = await createClient()
   
   const { data: profile } = await supabase

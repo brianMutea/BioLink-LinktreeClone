@@ -1,5 +1,4 @@
 'use client'
-export const runtime = 'nodejs'
 
 import { User } from '@supabase/supabase-js'
 import { Profile, Link, Collection } from '@/types'

@@ -1,5 +1,4 @@
 'use client'
-export const runtime = 'nodejs'
 
 import { useState, useEffect } from 'react'
 import { Profile, Link, Collection } from '@/types'
